@@ -13,10 +13,40 @@
 
 # import random
 # print(random.randint(1, 10))
-import math
-ans = 10/6
-if ans - int(ans) >= 0.5:
-    math.ceil(ans)
-elif ans - int(ans) < 0.5:
-    math.floor(ans)
+# import math
+# ans = float(input("what"))
+# if ans - math.floor(ans) >= 0.5:
+#     print(math.ceil(ans))
+# elif ans - math.floor(ans) < 0.5:
+#     print(math.floor(ans))
 
+
+
+
+# import random
+# import math
+# # ans = float(input("what"))
+# # if ans - math.floor(ans) >= 0.5:
+# #     print(math.ceil(ans))
+# #     ans = math.ceil(ans)
+# # elif ans - math.floor(ans) < 0.5:
+# #     print(math.floor(ans))
+# #     ans = math.floor(ans)
+# # random_num = random.randint(1, 100/ans)
+# # print(random_num)
+
+# print(round(random.uniform(1, 10), 100000))
+
+
+
+
+
+
+import random
+import math
+ans = float(input("WHat"))
+if ans - math.floor(ans) >= 0.5:
+    print(math.ceil(ans))
+elif ans - math.floor(ans) < 0.5:
+    print(math.floor(ans))
+print(round(random.uniform(1, 100/ans), 2))
