@@ -1,5 +1,6 @@
 import random
 import time
+import math
 #Golf incremental
 
 
@@ -8,7 +9,7 @@ types = [
      'multi': 1, 
      'cooldown': 1, 
      'accuracy': 1, 
-     'desc': "Average guy"
+     'desc': "Average guy",
      'money': 0
      },
 
@@ -16,7 +17,7 @@ types = [
      'multi': 1, 
      'cooldown': 1, 
      'accuracy': 1.1, 
-     'desc': "Pro: Increased accuracy Con: Dept"
+     'desc': "Pro: Increased accuracy Con: Dept",
      'money': -50
      },
 
@@ -24,15 +25,15 @@ types = [
      'multi': 1, 
      'cooldown': 0.8, 
      'accuracy': 0.8, 
-     'desc': "Pro: Decreased cooldown Con: Decreased accuracy"
+     'desc': "Pro: Decreased cooldown Con: Decreased accuracy",
      'money': 0
      },
 
     {'class': 'midas', 
      'multi': 1.25, 
-     'cooldown': 1.1, 
+     'cooldown': 1.0, 
      'accuracy': 0.925, 
-     'desc': "Pro: Increased mutli Con: Increased cooldown and decreased accuracy"
+     'desc': "Pro: Starter money Con: Increased cooldown and decreased accuracy",
      'money': 100
      }
 ]
@@ -47,6 +48,7 @@ for type in types:
     time.sleep(0.25)
 
 class_types = input("What class?").lower()
+goal = int(input("How much money you want to earn?"))
 
 for type1 in types:
     if class_types in type1['class']:
@@ -55,6 +57,8 @@ for type1 in types:
         accuracy = type1['accuracy']
         money = type1['money']
 
+base_money_earned = 1
+money_placeholder = 0
 
 class type:
     def __init__(self):
@@ -63,6 +67,7 @@ class type:
         self.cooldown = cooldown
         self.accuracy = accuracy
         self.money = money
+        money_placeholder = money
     
     def update_m(self, m_value):
         self.multi += m_value
@@ -77,7 +82,24 @@ class type:
         self.money += m_value
     
     def hit(self):
-        random.randint(1, int(100/self.accuracy)
+        ans = float(self.accuracy)
+        if ans - math.floor(ans) >= 0.5:
+            print(math.ceil(ans))
+        elif ans - math.floor(ans) < 0.5:
+            print(math.floor(ans))
+        ans = round(random.uniform(1, 100/ans), 2)
+        if self.accuracy >= ans:
+            self.money += base_money_earned * self.multi * 2
+            money_placeholder += base_money_earned * self.multi * 2
+        else:
+            self.money += base_money_earned * self.multi
+            money_placeholder += base_money_earned * self.multi
+
+start_time = time.perf_counter()
+player = type()
+while money_placeholder < goal:
+    
+
 
 
 
