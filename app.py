@@ -5,7 +5,7 @@ import math
 
 
 types = [
-    {'class': 'justin Lin', 
+    {'class': 'justin', 
      'multi': 1, 
      'cooldown': 1, 
      'accuracy': 1, 
@@ -33,7 +33,7 @@ types = [
      'multi': 1.25, 
      'cooldown': 1.0, 
      'accuracy': 0.925, 
-     'desc': "Pro: Starter money Con: Increased cooldown and decreased accuracy",
+     'desc': "Pro: Starter money Con: Decreased accuracy",
      'money': 100
      }
 ]
@@ -47,8 +47,8 @@ for type in types:
         print("- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -")
     time.sleep(0.25)
 
-class_types = input("What class?").lower()
-goal = int(input("How much money you want to earn?"))
+class_types = input("What class? ").lower()
+goal = int(input("How much money you want to earn? "))
 
 for type1 in types:
     if class_types in type1['class']:
@@ -59,6 +59,9 @@ for type1 in types:
 
 base_money_earned = 1
 money_placeholder = 0
+upgrade_value_m_percent = 0.01
+upgrade_value_c_percent = 0.01
+upgrade_value_a_percent = 0.01
 
 class type:
     def __init__(self):
@@ -67,19 +70,38 @@ class type:
         self.cooldown = cooldown
         self.accuracy = accuracy
         self.money = money
-        money_placeholder = money
     
+
+    def upgrade_m(self):
+        upgrade_value_m = self.mutli*upgrade_value_m_percent
+        upgrade_value_m_percent += 0.01
+        return upgrade_value_m
+
     def update_m(self, m_value):
         self.multi += m_value
     
+
+    def upgrade_c(self):
+        upgrade_value_c = self.mutli*upgrade_value_c_percent
+        upgrade_value_c_percent += 0.01
+        return upgrade_value_c
+
     def update_c(self, c_value):
-        self.cooldown += c_value
+        self.cooldown -= c_value
     
+
+    def upgrade_a(self):
+        upgrade_value_a = self.mutli*upgrade_value_a_percent
+        upgrade_value_a_percent += 0.01
+        return upgrade_value_a
+
     def update_a(self, a_value):
         self.accuracy += a_value
     
-    def update_m(self, m_value):
-        self.money += m_value
+
+    def update_mon(self, mon_value):
+        self.money += mon_value
+        
     
     def hit(self):
         ans = float(self.accuracy)
@@ -95,10 +117,14 @@ class type:
             self.money += base_money_earned * self.multi
             money_placeholder += base_money_earned * self.multi
 
-start_time = time.perf_counter()
+
 player = type()
-while money_placeholder < goal:
-    
+while money_placeholder <= goal:
+    print(f"Character: {class_types.capitalize()}")
+    print(f"Money: {player.money}")
+    print(f"Money Multi: {player.multi}")
+    print(f"Cooldown : {player.cooldown-1:.2f}%")
+    break
 
 
 
