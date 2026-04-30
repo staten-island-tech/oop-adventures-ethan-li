@@ -3,6 +3,19 @@ import time
 import math
 #Golf incremental
 
+print("Welcome to Gold Incremental!")
+time.sleep(1)
+print("Reach your goal ro ascend")  
+time.sleep(1)
+print("Ascend to get accession points")
+time.sleep(1)
+print("Use accession points on skill tree")
+time.sleep(1)
+print("Hole in ones give 2x money")
+time.sleep(1)
+print("Missing does not give extra multiplier")
+time.sleep(5)
+
 
 types = [
     {'class': 'justin', 
@@ -111,19 +124,39 @@ class type:
             print(math.floor(ans))
         ans = round(random.uniform(1, 100/ans), 2)
         if self.accuracy >= ans:
+            print("HIT!")
             self.money += base_money_earned * self.multi * 2
             money_placeholder += base_money_earned * self.multi * 2
         else:
+            print("MISS!")
             self.money += base_money_earned * self.multi
             money_placeholder += base_money_earned * self.multi
+    
+
+    def show_stats(self):
+        print(f"Character: {class_types.capitalize()}")
+        print(f"Money: ${player.money}")
+        print(f"Money Multi: {player.multi}x")
+        if player.cooldown-1 > 0:
+            print(f"Cooldown: {player.cooldown-1:.2f}% faster")
+        elif player.cooldown-1 < 0:
+            print(f"Cooldown: {player.cooldown-1:.2f}% slower")
+        elif player.cooldown-1 == 0:
+            print(f"Cooldown: 0% - Normal")
+
+    
+    def swing_or_upgrade(self, choice):
+        if choice.isdigit():
+            if choice == 1:
+                continue
+            
 
 
 player = type()
 while money_placeholder <= goal:
-    print(f"Character: {class_types.capitalize()}")
-    print(f"Money: {player.money}")
-    print(f"Money Multi: {player.multi}")
-    print(f"Cooldown : {player.cooldown-1:.2f}%")
+    player.show_stats()
+    time.sleep(2)
+    ready = input("Hit or Upgrade?").lower()
     break
 
 

@@ -35,5 +35,26 @@
 
 
 
-w = 1
-print(f"sdfasdf {w+1}")
+# w = 1
+# print(f"sdfasdf {w+1}")
+
+
+
+# user_input = input("Enter something: ")
+
+# if user_input.isdigit():
+#     user_input = int(user_input)
+#     print("Converted to integer.")
+# else:
+#     print("Kept as string.")
+
+x = input("y")
+def int_or_string(z):
+    if z.isdigit():
+        if int(z) >= 1:
+            print("greater than 1")
+        else:
+            print("less than one")
+    else:
+        print(z)
+int_or_string(x)
