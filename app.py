@@ -71,10 +71,18 @@ for type1 in types:
         money = type1['money']
 
 base_money_earned = 1
-money_placeholder = 0
+money_placeholder = money
 upgrade_value_m_percent = 0.01
 upgrade_value_c_percent = 0.01
 upgrade_value_a_percent = 0.01
+upgrade_value_m_percent_cost = 0.01
+upgrade_value_c_percent_cost = 0.02
+upgrade_value_a_percent_cost = 0.03
+cost_m = 1
+cost_c = 1
+cost_a = 1
+
+
 
 class type:
     def __init__(self):
@@ -86,30 +94,35 @@ class type:
     
 
     def upgrade_m(self):
-        upgrade_value_m = self.mutli*upgrade_value_m_percent
-        upgrade_value_m_percent += 0.01
-        return upgrade_value_m
+        if self.money >= cost_m:
+            self.money -= cost_m
+            upgrade_value_m_percent_cost += 0.01
+            cost_m = cost_m*upgrade_value_m_percent_cost
+            self.multi += self.mutli*upgrade_value_m_percent
+            upgrade_value_m_percent += 0.01
+        elif self.money < cost_m:
+            print("NOT ENOUGH MONEY!")
+            
 
-    def update_m(self, m_value):
-        self.multi += m_value
-    
 
     def upgrade_c(self):
-        upgrade_value_c = self.mutli*upgrade_value_c_percent
-        upgrade_value_c_percent += 0.01
-        return upgrade_value_c
+        if self.money >= cost_c:
+            self.money -= cost_c
+            upgrade_value_c_percent_cost += 0.02
+            cost_c = cost_c*upgrade_value_c_percent_cost
+            self.cooldown += self.cooldown*upgrade_value_c_percent
+            upgrade_value_c_percent += 0.01 
+        elif self.money < cost_c:
+            print("NOT ENOUGH MONEY!")
+        
 
-    def update_c(self, c_value):
-        self.cooldown -= c_value
-    
 
     def upgrade_a(self):
-        upgrade_value_a = self.mutli*upgrade_value_a_percent
-        upgrade_value_a_percent += 0.01
-        return upgrade_value_a
-
-    def update_a(self, a_value):
-        self.accuracy += a_value
+        if self.money >= cost_a:
+            self.money -= cost_a
+            upgrade_value_a_percent_cost += 0.03
+            cost_a = cost_a*upgrade_value_a_percent_cost
+            self.accuracy += 
     
 
     def update_mon(self, mon_value):
@@ -144,19 +157,22 @@ class type:
         elif player.cooldown-1 == 0:
             print(f"Cooldown: 0% - Normal")
 
-    
-    def swing_or_upgrade(self, choice):
-        if choice.isdigit():
-            if choice == 1:
-                continue
             
-
-
 player = type()
+
+
+def hit_or_upgrade(x):
+    if x == 1:
+        player.hit()
+    elif x == 2:
+
+
+
 while money_placeholder <= goal:
     player.show_stats()
     time.sleep(2)
     ready = input("Hit or Upgrade?").lower()
+
     break
 
 
