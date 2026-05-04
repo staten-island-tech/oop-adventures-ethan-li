@@ -122,11 +122,7 @@ class type:
             self.money -= cost_a
             upgrade_value_a_percent_cost += 0.03
             cost_a = cost_a*upgrade_value_a_percent_cost
-            self.accuracy += 
-    
-
-    def update_mon(self, mon_value):
-        self.money += mon_value
+            self.accuracy += self.accuracy*upgrade_value_a_percent
         
     
     def hit(self):
@@ -137,7 +133,7 @@ class type:
             print(math.floor(ans))
         ans = round(random.uniform(1, 100/ans), 2)
         if self.accuracy >= ans:
-            print("HIT!")
+            print("HOLE IN ONE!")
             self.money += base_money_earned * self.multi * 2
             money_placeholder += base_money_earned * self.multi * 2
         else:
@@ -162,10 +158,12 @@ player = type()
 
 
 def hit_or_upgrade(x):
-    if x == 1:
+    if x == "hit":
         player.hit()
-    elif x == 2:
-
+    else:
+        upgrade_type = input("What do you want to upgrade? (Multi/Cooldown/Accuracy)").lower()
+        if upgrade_type == "multi":
+            player.upgrade_m
 
 
 while money_placeholder <= goal:
@@ -173,7 +171,7 @@ while money_placeholder <= goal:
     time.sleep(2)
     ready = input("Hit or Upgrade?").lower()
 
-    break
+    
 
 
 

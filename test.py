@@ -48,13 +48,33 @@
 # else:
 #     print("Kept as string.")
 
-x = input("y")
-def int_or_string(z):
-    if z.isdigit():
-        if int(z) >= 1:
-            print("greater than 1")
-        else:
-            print("less than one")
-    else:
-        print(z)
-int_or_string(x)
+
+
+
+# x = input("y")
+# def int_or_string(z):
+#     if z.isdigit():
+#         if int(z) >= 1:
+#             print("greater than 1")
+#         else:
+#             print("less than one")
+#     else:
+#         print(z)
+# int_or_string(x)
+
+
+
+x = 0
+def add():
+    if x < 10:
+        print(x)
+        return True
+        
+    elif x >= 10:
+        print(x)
+        return False
+        
+    
+while True:
+    x += 1
+    add()
