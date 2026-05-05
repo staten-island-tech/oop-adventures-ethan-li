@@ -72,16 +72,13 @@ for type1 in types:
 
 base_money_earned = 1
 money_placeholder = money
-upgrade_value_m_percent = 0.01
-upgrade_value_c_percent = 0.01
-upgrade_value_a_percent = 0.01
 upgrade_value_m_percent_cost = 0.01
 upgrade_value_c_percent_cost = 0.02
 upgrade_value_a_percent_cost = 0.03
 cost_m = 1
 cost_c = 1
 cost_a = 1
-
+trail = 0
 
 
 class type:
@@ -91,38 +88,48 @@ class type:
         self.cooldown = cooldown
         self.accuracy = accuracy
         self.money = money
+        self.upgrade_value_m_percent = 0.01
+        self.upgrade_value_c_percent = 0.01
+        self.upgrade_value_a_percent = 0.01
     
 
     def upgrade_m(self):
         if self.money >= cost_m:
             self.money -= cost_m
-            upgrade_value_m_percent_cost += 0.01
             cost_m = cost_m*upgrade_value_m_percent_cost
-            self.multi += self.mutli*upgrade_value_m_percent
-            upgrade_value_m_percent += 0.01
+            upgrade_value_m_percent_cost += 0.01
+            self.multi += self.mutli*self.upgrade_value_m_percent
+            self.upgrade_value_m_percent += 0.01
         elif self.money < cost_m:
             print("NOT ENOUGH MONEY!")
+            trail += 1
             
 
 
     def upgrade_c(self):
         if self.money >= cost_c:
             self.money -= cost_c
-            upgrade_value_c_percent_cost += 0.02
             cost_c = cost_c*upgrade_value_c_percent_cost
-            self.cooldown += self.cooldown*upgrade_value_c_percent
-            upgrade_value_c_percent += 0.01 
+            upgrade_value_c_percent_cost += 0.02
+            self.cooldown += self.cooldown*self.upgrade_value_c_percent
+            self.upgrade_value_c_percent += 0.01 
         elif self.money < cost_c:
             print("NOT ENOUGH MONEY!")
+            trail += 1
         
 
 
     def upgrade_a(self):
         if self.money >= cost_a:
             self.money -= cost_a
-            upgrade_value_a_percent_cost += 0.03
             cost_a = cost_a*upgrade_value_a_percent_cost
-            self.accuracy += self.accuracy*upgrade_value_a_percent
+            upgrade_value_a_percent_cost += 0.03
+            self.accuracy += self.accuracy*self.upgrade_value_a_percent
+            self.upgrade_value_a_percent += 0.01
+        elif self.money < cost_a:
+            print("NOT ENOUGH MONEY")
+            trail += 1
+            
         
     
     def hit(self):
@@ -162,8 +169,10 @@ def hit_or_upgrade(x):
         player.hit()
     else:
         upgrade_type = input("What do you want to upgrade? (Multi/Cooldown/Accuracy)").lower()
-        if upgrade_type == "multi":
-            player.upgrade_m
+
+        if upgrade_type == "multi" and player.money >= cost_m:
+            player.upgrade_m()
+
 
 
 while money_placeholder <= goal:

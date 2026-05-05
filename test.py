@@ -75,6 +75,6 @@ def add():
         return False
         
     
-while True:
+while add():
     x += 1
     add()
