@@ -3,7 +3,7 @@ import time
 import math
 #Golf incremental
 
-print("Welcome to Gold Incremental!")
+print("Welcome to Golf Incremental!")
 time.sleep(1)
 print("Reach your goal ro ascend")  
 time.sleep(1)
@@ -71,14 +71,6 @@ for type1 in types:
         money = type1['money']
 
 base_money_earned = 1
-money_placeholder = money
-upgrade_value_m_percent_cost = 0.01
-upgrade_value_c_percent_cost = 0.02
-upgrade_value_a_percent_cost = 0.03
-cost_m = 1
-cost_c = 1
-cost_a = 1
-trail = 0
 
 
 class type:
@@ -88,18 +80,26 @@ class type:
         self.cooldown = cooldown
         self.accuracy = accuracy
         self.money = money
-        self.upgrade_value_m_percent = 0.01
-        self.upgrade_value_c_percent = 0.01
-        self.upgrade_value_a_percent = 0.01
+        self.upgrade_value_m_percent = 0.05
+        self.upgrade_value_c_percent = 0.03
+        self.upgrade_value_a_percent = 0.02
+        self.upgrade_value_m_percent_cost = 0.01
+        self.upgrade_value_c_percent_cost = 0.02
+        self.upgrade_value_a_percent_cost = 0.03
+        self.cost_m = 1
+        self.cost_c = 5
+        self.cost_a = 10
+
+        
     
 
     def upgrade_m(self):
-        if self.money >= cost_m:
+        if self.money >= self.cost_m:
             self.money -= cost_m
-            cost_m = cost_m*upgrade_value_m_percent_cost
-            upgrade_value_m_percent_cost += 0.01
-            self.multi += self.mutli*self.upgrade_value_m_percent
-            self.upgrade_value_m_percent += 0.01
+            cost_m = cost_m*self.upgrade_value_m_percent_cost
+            self.upgrade_value_m_percent_cost += 0.01
+            self.multi += self.multi*self.upgrade_value_m_percent
+            self.upgrade_value_m_percent += 0.05
         elif self.money < cost_m:
             print("NOT ENOUGH MONEY!")
             trail += 1
@@ -107,25 +107,25 @@ class type:
 
 
     def upgrade_c(self):
-        if self.money >= cost_c:
+        if self.money >= self.cost_c:
             self.money -= cost_c
-            cost_c = cost_c*upgrade_value_c_percent_cost
-            upgrade_value_c_percent_cost += 0.02
+            cost_c = cost_c*self.upgrade_value_c_percent_cost
+            self.upgrade_value_c_percent_cost += 0.02
             self.cooldown += self.cooldown*self.upgrade_value_c_percent
-            self.upgrade_value_c_percent += 0.01 
+            self.upgrade_value_c_percent += 0.03 
         elif self.money < cost_c:
-            print("NOT ENOUGH MONEY!")
+            print("NOT ENOUGH MONEY")
             trail += 1
         
 
 
     def upgrade_a(self):
-        if self.money >= cost_a:
+        if self.money >= self.cost_a:
             self.money -= cost_a
-            cost_a = cost_a*upgrade_value_a_percent_cost
-            upgrade_value_a_percent_cost += 0.03
+            cost_a = cost_a*self.upgrade_value_a_percent_cost
+            self.upgrade_value_a_percent_cost += 0.03
             self.accuracy += self.accuracy*self.upgrade_value_a_percent
-            self.upgrade_value_a_percent += 0.01
+            self.upgrade_value_a_percent += 0.02
         elif self.money < cost_a:
             print("NOT ENOUGH MONEY")
             trail += 1
@@ -138,15 +138,13 @@ class type:
             print(math.ceil(ans))
         elif ans - math.floor(ans) < 0.5:
             print(math.floor(ans))
-        ans = round(random.uniform(1, 100/ans), 2)
-        if self.accuracy >= ans:
+        round = round(random.uniform(1, 100/ans), 2)
+        if self.accuracy >= round:
             print("HOLE IN ONE!")
             self.money += base_money_earned * self.multi * 2
-            money_placeholder += base_money_earned * self.multi * 2
         else:
             print("MISS!")
             self.money += base_money_earned * self.multi
-            money_placeholder += base_money_earned * self.multi
     
 
     def show_stats(self):
@@ -167,21 +165,22 @@ player = type()
 def hit_or_upgrade(x):
     if x == "hit":
         player.hit()
-    else:
+    elif x == "upgrade":
         upgrade_type = input("What do you want to upgrade? (Multi/Cooldown/Accuracy)").lower()
-
-        if upgrade_type == "multi" and player.money >= cost_m:
+        if upgrade_type == "multi":
             player.upgrade_m()
+        elif upgrade_type == "cooldown":
+            player.upgrade_c()
+        elif upgrade_type == "accuracy":
+            player.upgrade_a()
 
 
-
-while money_placeholder <= goal:
+while player.money <= goal:
     player.show_stats()
     time.sleep(2)
-    ready = input("Hit or Upgrade?").lower()
+    ready = str(input("Hit or Upgrade?").lower())
+    hit_or_upgrade(ready)
 
     
 
-
-
-
+# fix cost_m
