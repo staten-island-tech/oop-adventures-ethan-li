@@ -64,17 +64,24 @@
 
 
 
-x = 0
-def add():
-    if x < 10:
-        print(x)
-        return True
+# x = 0
+# def add():
+#     if x < 10:
+#         print(x)
+#         return True
         
-    elif x >= 10:
-        print(x)
-        return False
+#     elif x >= 10:
+#         print(x)
+#         return False
         
     
-while add():
-    x += 1
-    add()
+# while add():
+#     x += 1
+#     add()
+
+
+
+import random
+ans = 2.5
+round = round(random.uniform(1, 100/ans), 2)
+print(round)
