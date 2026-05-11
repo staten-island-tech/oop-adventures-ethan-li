@@ -6,7 +6,7 @@ import math
 print("Welcome to Golf Incremental!")
 print("- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -")
 time.sleep(1)
-print("Reach your goal ro ascend")  
+print("Reach your goal to ascend")  
 time.sleep(1)
 print("Ascend to get accession points")
 time.sleep(1)
@@ -52,6 +52,7 @@ types = [
      }
 ]
 
+print("- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -")
 print("Class list:")
 for type in types:
     print("- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -")
@@ -63,6 +64,8 @@ for type in types:
 
 class_types = input("What class? ").lower()
 goal = int(input("How much money you want to earn? "))
+print("- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -")
+time.sleep(0.25)
 
 for type1 in types:
     if class_types in type1['class']:
@@ -95,14 +98,19 @@ class type:
     
 
     def upgrade_m(self):
+        print("You have $" + str(self.money))
         yes_or_no = input("Upgrading Multi for $" + str(self.cost_m) + " from " + str(self.multi) + "x ---> " + str(self.multi+self.multi*self.upgrade_value_m_percent) + "x? (Yes/No) ").lower()
+        print("- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -")
+        time.sleep(0.25)
         if yes_or_no == "yes":
             if self.money >= self.cost_m:
                 self.money -= self.cost_m
                 self.cost_m = self.cost_m*self.upgrade_value_m_percent_cost
                 self.upgrade_value_m_percent_cost += 0.25
                 self.multi += self.multi*self.upgrade_value_m_percent
-                self.upgrade_value_m_percent += 0.1
+                self.upgrade_value_m_percent += 0.1 
+                print("You have $" + str(self.money))
+                print("Current Money Multi: " + str(self.multi))
                 hit_or_upgrade(ready)
             elif self.money < self.cost_m:
                 print("NOT ENOUGH MONEY!")          
@@ -111,7 +119,10 @@ class type:
             print("- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -")
 
     def upgrade_c(self):
+        print("You have $" + str(self.money))
         yes_or_no = input("Upgrading Multi for $" + str(self.cost_c) + " from " + str(self.cooldown) + " ---> " + str(self.cooldown+self.cooldown*self.upgrade_value_c_percent) + "? (Yes/No) ").lower()
+        print("- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -")
+        time.sleep(0.25)
         if yes_or_no == "yes":
             if self.money >= self.cost_c:
                 self.money -= self.cost_c
@@ -119,6 +130,8 @@ class type:
                 self.upgrade_value_c_percent_cost += 0.5
                 self.cooldown += self.cooldown*self.upgrade_value_c_percent
                 self.upgrade_value_c_percent += 0.2 
+                print("You have $" + str(self.money))
+                print("Current Cooldown Multi: " + str(self.cooldown))
                 hit_or_upgrade(ready)
             elif self.money < self.cost_c:
                 print("NOT ENOUGH MONEY!")
@@ -128,7 +141,10 @@ class type:
 
 
     def upgrade_a(self):
+        print("You have $" + str(self.money))
         yes_or_no = input("Upgrading Multi for $" + str(self.cost_a) + " from " + str(self.accuracy) + "x ---> " + str(self.accuracy+self.accuracy*self.upgrade_value_c_percent) + "x? (Yes/No) ").lower()
+        print("- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -")
+        time.sleep(0.25)
         if yes_or_no == "yes":
             if self.money >= self.cost_a:
                 self.money -= self.cost_a
@@ -136,6 +152,8 @@ class type:
                 self.upgrade_value_a_percent_cost += 0.75
                 self.accuracy += self.accuracy*self.upgrade_value_a_percent
                 self.upgrade_value_a_percent += 0.3
+                print("You have $" + str(self.money))
+                print("Current Accuracy Multi " + str(self.accuracy))
                 hit_or_upgrade(ready)
             elif self.money < self.cost_a:
                 print("NOT ENOUGH MONEY")
@@ -175,7 +193,7 @@ def hit_or_upgrade(x):
     if x == "hit":
         player.hit()
     elif x == "upgrade":
-        upgrade_type = input("What do you want to upgrade? (Multi/Cooldown/Accuracy) ").lower()
+        upgrade_type = input("What do you want to upgrade? (Multi/Cooldown/Accuracy/No upgrade) ").lower()
         if upgrade_type == "multi":
             player.upgrade_m()
         elif upgrade_type == "cooldown":
@@ -187,8 +205,9 @@ player.show_stats()
 
 while player.money <= goal:
     
-    time.sleep(2)
+    time.sleep(1)
     ready = str(input("Hit or Upgrade? ").lower())
+    hit_or_upgrade(ready)
     
 
     

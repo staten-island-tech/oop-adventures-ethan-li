@@ -82,6 +82,5 @@
 
 
 import random
-ans = 2.5
-round = round(random.uniform(1, 100/ans), 2)
+round = round(random.uniform(1, 100/1.25), 2)
 print(round)
