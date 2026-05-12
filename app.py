@@ -12,9 +12,9 @@ print("Ascend to get accession points")
 time.sleep(1)
 print("Use accession points on skill tree")
 time.sleep(1)
-print("Hole in ones give 2x money")
+print("Hole in ones give 2x money and landing a hit gives no extra multiplier")
 time.sleep(1)
-print("Missing does not give extra multiplier")
+print("Missing does not give money")
 time.sleep(5)
 
 
@@ -63,7 +63,7 @@ for type in types:
     time.sleep(0.25)
 
 class_types = input("What class? ").lower()
-goal = int(input("How much money you want to earn? "))
+goal = int(input("How much money you want to earn? "))  # Add Diffuclty mode #   Easy - like this   Mid - 1.5x cost     Hard - 2x cost  
 print("- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -")
 time.sleep(0.25)
 
@@ -164,14 +164,21 @@ class type:
              
     
     def hit(self):
-        round = round(random.uniform(1, 100/self.accuracy), 2)
-        if self.accuracy >= round:
-            print("HOLE IN ONE!")
-            self.money += base_money_earned * self.multi * 2
+        hit_or_miss = random.randint(1, 100)
+        if hit_or_miss > 50:
+            divide = self.accuracy
+            est = round(random.uniform(1, 100/divide), 2)
+            if self.accuracy >= est:
+                print("HOLE IN ONE!")
+                self.money += base_money_earned * self.multi * 2
+                print("$ " + str(self.money))
+            else:
+                print("HIT!")
+                self.money += base_money_earned * self.multi
+                print("$ " + str(self.money))
         else:
             print("MISS!")
-            self.money += base_money_earned * self.multi
-    
+        
 
     def show_stats(self):
         print(f"Character: {class_types.capitalize()}")
@@ -192,6 +199,10 @@ player = type()
 def hit_or_upgrade(x):
     if x == "hit":
         player.hit()
+        # if time.perf_counter() - start_time > hit_cooldown:
+        #     player.hit()
+        # else:
+        #     print("On Cooldown!")
     elif x == "upgrade":
         upgrade_type = input("What do you want to upgrade? (Multi/Cooldown/Accuracy/No upgrade) ").lower()
         if upgrade_type == "multi":
@@ -204,7 +215,8 @@ def hit_or_upgrade(x):
 player.show_stats()
 
 while player.money <= goal:
-    
+    start_time = time.perf_counter()
+    hit_cooldown = 10 * player.cooldown
     time.sleep(1)
     ready = str(input("Hit or Upgrade? ").lower())
     hit_or_upgrade(ready)
