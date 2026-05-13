@@ -167,7 +167,7 @@ class type:
         hit_or_miss = random.randint(1, 100)
         if hit_or_miss > 50:
             divide = self.accuracy
-            est = round(random.uniform(1, 100/divide), 2)
+            est = round(random.uniform(1, 50/divide), 2)
             if self.accuracy >= est:
                 print("HOLE IN ONE!")
                 self.money += base_money_earned * self.multi * 2
@@ -194,15 +194,12 @@ class type:
 
     
 player = type()
-
+hit_counter = 
 
 def hit_or_upgrade(x):
     if x == "hit":
         player.hit()
-        # if time.perf_counter() - start_time > hit_cooldown:
-        #     player.hit()
-        # else:
-        #     print("On Cooldown!")
+    
     elif x == "upgrade":
         upgrade_type = input("What do you want to upgrade? (Multi/Cooldown/Accuracy/No upgrade) ").lower()
         if upgrade_type == "multi":
@@ -215,9 +212,6 @@ def hit_or_upgrade(x):
 player.show_stats()
 
 while player.money <= goal:
-    start_time = time.perf_counter()
-    hit_cooldown = 10 * player.cooldown
-    time.sleep(1)
     ready = str(input("Hit or Upgrade? ").lower())
     hit_or_upgrade(ready)
     
