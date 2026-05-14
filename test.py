@@ -89,29 +89,32 @@
 
 import time
 
-class CombatSystem:
+class wasd:
     def __init__(self, cooldown_seconds=2.0):
         self.cooldown = cooldown_seconds
-        self.last_hit_time = 0  # Initialize with 0
+        self.last_hit_time = 0  
 
     def try_hit(self):
         current_time = time.time()
-        # Check if current time minus last hit time is greater than cooldown
         if current_time - self.last_hit_time >= self.cooldown:
             print("Hit successful!")
             self.last_hit_time = current_time
-            return True
-        else:
-            print(f"Still on cooldown. Wait {self.cooldown - (current_time - self.last_hit_time):.1f}s")
             return False
+        else:
+            print(f"Still on cooldown. Wait {self.cooldown - (current_time - self.last_hit_time):.2f}s")
+            return True
 
-combat = CombatSystem()
+combat = wasd()
 
-# Main game loop simulator
-while True:
-    # This represents other code running constantly
-    print("Background tasks running (physics, UI, etc.)...")
+while combat.try_hit() is True:
+
+    
+    combat.try_hit()
+    time.sleep(0.25) 
+while combat.try_hit() is True:
+
     
     combat.try_hit() 
-    
-    time.sleep(0.5) # Small delay just for the demo loop
+    time.sleep(0.25)
+
+

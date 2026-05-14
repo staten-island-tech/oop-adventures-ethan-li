@@ -93,9 +93,9 @@ class type:
         self.cost_m = 10
         self.cost_c = 20
         self.cost_a = 50
-
+        self.cooldown_time = 10*cooldown
+        self.last_hit_time = 0  
         
-    
 
     def upgrade_m(self):
         print("You have $" + str(self.money))
@@ -132,6 +132,8 @@ class type:
                 self.upgrade_value_c_percent += 0.2 
                 print("You have $" + str(self.money))
                 print("Current Cooldown Multi: " + str(self.cooldown))
+                self.cooldown_time = 10*self.cooldown
+                print("Cooldown: " + str(self.cooldown_time))
                 hit_or_upgrade(ready)
             elif self.money < self.cost_c:
                 print("NOT ENOUGH MONEY!")
@@ -164,6 +166,29 @@ class type:
              
     
     def hit(self):
+        current_time = time.time()
+        if current_time - self.last_hit_time >= self.cooldown:
+            print("Hit successful!")
+            self.last_hit_time = current_time
+
+            hit_or_miss = random.randint(1, 100)
+            if hit_or_miss > 50:
+                divide = self.accuracy
+                est = round(random.uniform(1, 50/divide), 2)
+                if self.accuracy >= est:
+                    print("HOLE IN ONE!")
+                    self.money += base_money_earned * self.multi * 2
+                    print("$ " + str(self.money))
+                else:
+                    print("HIT!")
+                    self.money += base_money_earned * self.multi
+                    print("$ " + str(self.money))
+            else:
+                print("MISS!")
+        else:
+            print(f"Still on cooldown. Wait {self.cooldown - (current_time - self.last_hit_time):.2f}s")
+    
+
         hit_or_miss = random.randint(1, 100)
         if hit_or_miss > 50:
             divide = self.accuracy
@@ -194,7 +219,6 @@ class type:
 
     
 player = type()
-hit_counter = 
 
 def hit_or_upgrade(x):
     if x == "hit":
