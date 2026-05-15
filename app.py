@@ -1,6 +1,18 @@
 import random
 import time
 import math
+import requests
+
+# def getRiddle(difficulty):
+#     response = requests.get(f"https://api.apileague.com/retrieve-random-riddle?api-key=1f532a394a454ca5a7b997b4a8031c40&difficulty={difficulty.lower()}")
+#     if response.status_code != 200:
+#         print("Error fetching data!")
+#         return None
+#     data = response.json()
+
+#     riddle = data['riddle']
+#     answer = data['answer'].lower()
+
 #Golf incremental
 
 print("Welcome to Golf Incremental!")
@@ -23,14 +35,14 @@ types = [
      'multi': 1, 
      'cooldown': 1, 
      'accuracy': 1, 
-     'desc': "Average guy",
+     'desc': "Slightly average guy",
      'money': 0
      },
 
     {'class': 'sharpshooter', 
      'multi': 1, 
      'cooldown': 1, 
-     'accuracy': 1.1, 
+     'accuracy': 1.25, 
      'desc': "Pro: Increased accuracy Con: Dept",
      'money': -50
      },
@@ -46,7 +58,7 @@ types = [
     {'class': 'midas', 
      'multi': 1.25, 
      'cooldown': 1.0, 
-     'accuracy': 0.925, 
+     'accuracy': 0.8, 
      'desc': "Pro: Starter money Con: Decreased accuracy",
      'money': 100
      }
@@ -74,7 +86,7 @@ for type1 in types:
         accuracy = type1['accuracy']
         money = type1['money']
 
-base_money_earned = 1
+base_money_earned = 10
 
 
 class type:
@@ -93,7 +105,7 @@ class type:
         self.cost_m = 10
         self.cost_c = 20
         self.cost_a = 50
-        self.cooldown_time = 10*cooldown
+        self.cooldown_time = 10/cooldown
         self.last_hit_time = 0  
         
 
@@ -105,7 +117,7 @@ class type:
         if yes_or_no == "yes":
             if self.money >= self.cost_m:
                 self.money -= self.cost_m
-                self.cost_m = self.cost_m*self.upgrade_value_m_percent_cost
+                self.cost_m += self.cost_m*self.upgrade_value_m_percent_cost
                 self.upgrade_value_m_percent_cost += 0.25
                 self.multi += self.multi*self.upgrade_value_m_percent
                 self.upgrade_value_m_percent += 0.1 
@@ -126,7 +138,7 @@ class type:
         if yes_or_no == "yes":
             if self.money >= self.cost_c:
                 self.money -= self.cost_c
-                self.cost_c = self.cost_c*self.upgrade_value_c_percent_cost
+                self.cost_c += self.cost_c*self.upgrade_value_c_percent_cost
                 self.upgrade_value_c_percent_cost += 0.5
                 self.cooldown += self.cooldown*self.upgrade_value_c_percent
                 self.upgrade_value_c_percent += 0.2 
@@ -150,7 +162,7 @@ class type:
         if yes_or_no == "yes":
             if self.money >= self.cost_a:
                 self.money -= self.cost_a
-                self.cost_a = self.cost_a*self.upgrade_value_a_percent_cost
+                self.cost_a += self.cost_a*self.upgrade_value_a_percent_cost
                 self.upgrade_value_a_percent_cost += 0.75
                 self.accuracy += self.accuracy*self.upgrade_value_a_percent
                 self.upgrade_value_a_percent += 0.3
@@ -167,10 +179,8 @@ class type:
     
     def hit(self):
         current_time = time.time()
-        if current_time - self.last_hit_time >= self.cooldown:
-            print("Hit successful!")
+        if current_time - self.last_hit_time >= self.cooldown_time:
             self.last_hit_time = current_time
-
             hit_or_miss = random.randint(1, 100)
             if hit_or_miss > 50:
                 divide = self.accuracy
@@ -183,26 +193,10 @@ class type:
                     print("HIT!")
                     self.money += base_money_earned * self.multi
                     print("$ " + str(self.money))
-            else:
+            elif hit_or_miss <= 50:
                 print("MISS!")
         else:
-            print(f"Still on cooldown. Wait {self.cooldown - (current_time - self.last_hit_time):.2f}s")
-    
-
-        hit_or_miss = random.randint(1, 100)
-        if hit_or_miss > 50:
-            divide = self.accuracy
-            est = round(random.uniform(1, 50/divide), 2)
-            if self.accuracy >= est:
-                print("HOLE IN ONE!")
-                self.money += base_money_earned * self.multi * 2
-                print("$ " + str(self.money))
-            else:
-                print("HIT!")
-                self.money += base_money_earned * self.multi
-                print("$ " + str(self.money))
-        else:
-            print("MISS!")
+            print(f"Still on cooldown. Wait {self.cooldown_time - (current_time - self.last_hit_time):.2f}s")
         
 
     def show_stats(self):
