@@ -12,5 +12,12 @@ def getRiddle(difficulty):
     answer = data['answer'].lower()
     print(riddle)
     print(answer)
+    return answer
 
-getRiddle("easy")
+
+for words in getRiddle("hard"):
+    word = input("dlk")
+    for wasd in word:
+        if wasd in words:
+            print("yes")
+            break

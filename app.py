@@ -8,10 +8,15 @@ import requests
 #     if response.status_code != 200:
 #         print("Error fetching data!")
 #         return None
+    
 #     data = response.json()
 
 #     riddle = data['riddle']
 #     answer = data['answer'].lower()
+#     print(riddle)
+#     print(answer)
+#     return answer
+
 
 #Golf incremental
 
@@ -60,7 +65,7 @@ types = [
      'cooldown': 1.0, 
      'accuracy': 0.8, 
      'desc': "Pro: Starter money Con: Decreased accuracy",
-     'money': 100
+     'money': 10000000
      }
 ]
 
@@ -110,6 +115,7 @@ class type:
         
 
     def upgrade_m(self):
+        print("- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -")
         print("You have $" + str(self.money))
         yes_or_no = input("Upgrading Multi for $" + str(self.cost_m) + " from " + str(self.multi) + "x ---> " + str(self.multi+self.multi*self.upgrade_value_m_percent) + "x? (Yes/No) ").lower()
         print("- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -")
@@ -122,7 +128,8 @@ class type:
                 self.multi += self.multi*self.upgrade_value_m_percent
                 self.upgrade_value_m_percent += 0.1 
                 print("You have $" + str(self.money))
-                print("Current Money Multi: " + str(self.multi))
+                print("Current Money Multi: " + str(self.multi) + "x")
+                print("- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -")
                 hit_or_upgrade(ready)
             elif self.money < self.cost_m:
                 print("NOT ENOUGH MONEY!")          
@@ -131,8 +138,10 @@ class type:
             print("- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -")
 
     def upgrade_c(self):
+        print("- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -")
         print("You have $" + str(self.money))
-        yes_or_no = input("Upgrading Multi for $" + str(self.cost_c) + " from " + str(self.cooldown) + " ---> " + str(self.cooldown+self.cooldown*self.upgrade_value_c_percent) + "? (Yes/No) ").lower()
+        yes_or_no = input("Upgrading cooldown for $" + str(self.cost_c) + " from " + str(self.cooldown) + "x ---> " + str(self.cooldown+self.cooldown*self.upgrade_value_c_percent) + "x? (Yes/No) ").lower()
+        print("Current Cooldown Time: " + str(self.cooldown_time) + " seconds")
         print("- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -")
         time.sleep(0.25)
         if yes_or_no == "yes":
@@ -143,9 +152,10 @@ class type:
                 self.cooldown += self.cooldown*self.upgrade_value_c_percent
                 self.upgrade_value_c_percent += 0.2 
                 print("You have $" + str(self.money))
-                print("Current Cooldown Multi: " + str(self.cooldown))
-                self.cooldown_time = 10*self.cooldown
-                print("Cooldown: " + str(self.cooldown_time))
+                print("Current Cooldown Multi: " + str(self.cooldown) + "x")
+                self.cooldown_time = 10/self.cooldown
+                print("Cooldown: " + str(self.cooldown_time) + " seconds")
+                print("- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -")
                 hit_or_upgrade(ready)
             elif self.money < self.cost_c:
                 print("NOT ENOUGH MONEY!")
@@ -155,8 +165,9 @@ class type:
 
 
     def upgrade_a(self):
+        print("- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -")
         print("You have $" + str(self.money))
-        yes_or_no = input("Upgrading Multi for $" + str(self.cost_a) + " from " + str(self.accuracy) + "x ---> " + str(self.accuracy+self.accuracy*self.upgrade_value_c_percent) + "x? (Yes/No) ").lower()
+        yes_or_no = input("Upgrading accuracy for $" + str(self.cost_a) + " from " + str(self.accuracy) + "x ---> " + str(self.accuracy+self.accuracy*self.upgrade_value_a_percent) + "x? (Yes/No) ").lower()
         print("- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -")
         time.sleep(0.25)
         if yes_or_no == "yes":
@@ -167,7 +178,8 @@ class type:
                 self.accuracy += self.accuracy*self.upgrade_value_a_percent
                 self.upgrade_value_a_percent += 0.3
                 print("You have $" + str(self.money))
-                print("Current Accuracy Multi " + str(self.accuracy))
+                print("Current Accuracy Multi " + str(self.accuracy + "x"))
+                print("- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -")
                 hit_or_upgrade(ready)
             elif self.money < self.cost_a:
                 print("NOT ENOUGH MONEY")
