@@ -15,8 +15,8 @@ import requests
 #     answer = data['answer'].lower()
 #     print(riddle)
 #     print(answer)
-#     return answer
-
+    # list = [answer]
+    # return list
 
 #Golf incremental
 
@@ -80,7 +80,8 @@ for type in types:
     time.sleep(0.25)
 
 class_types = input("What class? ").lower()
-goal = int(input("How much money you want to earn? "))  # Add Diffuclty mode #   Easy - like this   Mid - 1.5x cost     Hard - 2x cost  
+difficulty = input("What difficulty? ").lower()  # Add Diffuclty mode #   Easy - 2x money   Normal - Normal     Hard - 1.5x cost  Extreeme - 2x cost + 1/2x money 
+
 print("- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -")
 time.sleep(0.25)
 
@@ -91,8 +92,36 @@ for type1 in types:
         accuracy = type1['accuracy']
         money = type1['money']
 
-base_money_earned = 10
+m = 1
+c = 1
+a = 1
+mm = 1
 
+
+if difficulty == "easy":
+    base_money_earned = 10*2
+    goal = 10000/2
+    print("Goal: $" + goal)
+elif difficulty == "normal":
+    base_money_earned = 10
+    goal = 10000
+    print("Goal: $" + goal)
+elif difficulty == "hard":
+    base_money_earned = 10 
+    goal = 10000
+    m = 1.5
+    c = 1.5
+    a = 1.5
+elif difficulty == "extreme":
+    base_money_earned = 10/2
+    goal = 10000*2
+    m = 2
+    c = 2
+    a = 2
+elif difficulty == "qwerty":
+    base_money_earned = 10
+    goal = 999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999
+    mm = 999999999999999999999999999999999
 
 class type:
     def __init__(self):
@@ -100,16 +129,16 @@ class type:
         self.multi = multi
         self.cooldown = cooldown
         self.accuracy = accuracy
-        self.money = money
+        self.money = money*mm
         self.upgrade_value_m_percent = 0.1
         self.upgrade_value_c_percent = 0.2
         self.upgrade_value_a_percent = 0.3
         self.upgrade_value_m_percent_cost = 0.25
         self.upgrade_value_c_percent_cost = 0.5
         self.upgrade_value_a_percent_cost = 0.75
-        self.cost_m = 10
-        self.cost_c = 20
-        self.cost_a = 50
+        self.cost_m = 10*m
+        self.cost_c = 20*c
+        self.cost_a = 50*a
         self.cooldown_time = 10/cooldown
         self.last_hit_time = 0  
         
@@ -117,7 +146,7 @@ class type:
     def upgrade_m(self):
         print("- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -")
         print("You have $" + str(self.money))
-        yes_or_no = input("Upgrading Multi for $" + str(self.cost_m) + " from " + str(self.multi) + "x ---> " + str(self.multi+self.multi*self.upgrade_value_m_percent) + "x? (Yes/No) ").lower()
+        yes_or_no = input(f"Upgrading Multi for ${self.cost_m:.2f} from {self.multi:.2f} x ---> {(self.multi+self.multi*self.upgrade_value_m_percent):.2f} x? (Yes/No) ").lower()
         print("- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -")
         time.sleep(0.25)
         if yes_or_no == "yes":
@@ -128,7 +157,7 @@ class type:
                 self.multi += self.multi*self.upgrade_value_m_percent
                 self.upgrade_value_m_percent += 0.1 
                 print("You have $" + str(self.money))
-                print("Current Money Multi: " + str(self.multi) + "x")
+                print(f"Current Money Multi: {self.multi:.2f} x")
                 print("- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -")
                 hit_or_upgrade(ready)
             elif self.money < self.cost_m:
@@ -140,8 +169,8 @@ class type:
     def upgrade_c(self):
         print("- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -")
         print("You have $" + str(self.money))
-        yes_or_no = input("Upgrading cooldown for $" + str(self.cost_c) + " from " + str(self.cooldown) + "x ---> " + str(self.cooldown+self.cooldown*self.upgrade_value_c_percent) + "x? (Yes/No) ").lower()
-        print("Current Cooldown Time: " + str(self.cooldown_time) + " seconds")
+        yes_or_no = input(f"Upgrading cooldown for ${self.cost_c:.2f} from {self.cooldown:.2f} x ---> {(self.cooldown+self.cooldown*self.upgrade_value_c_percent):.2f} x? (Yes/No) ").lower()
+        print(f"Current Cooldown Time: {self.cooldown_time:.2f} seconds")
         print("- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -")
         time.sleep(0.25)
         if yes_or_no == "yes":
@@ -154,7 +183,7 @@ class type:
                 print("You have $" + str(self.money))
                 print("Current Cooldown Multi: " + str(self.cooldown) + "x")
                 self.cooldown_time = 10/self.cooldown
-                print("Cooldown: " + str(self.cooldown_time) + " seconds")
+                print(f"Cooldown: {self.cooldown_time:.2f} seconds")
                 print("- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -")
                 hit_or_upgrade(ready)
             elif self.money < self.cost_c:
@@ -167,7 +196,7 @@ class type:
     def upgrade_a(self):
         print("- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -")
         print("You have $" + str(self.money))
-        yes_or_no = input("Upgrading accuracy for $" + str(self.cost_a) + " from " + str(self.accuracy) + "x ---> " + str(self.accuracy+self.accuracy*self.upgrade_value_a_percent) + "x? (Yes/No) ").lower()
+        yes_or_no = input(f"Upgrading accuracy for ${self.cost_a:.2f} from {self.accuracy:.2f} x ---> {(self.accuracy+self.accuracy*self.upgrade_value_a_percent):.2f} x? (Yes/No) ").lower()
         print("- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -")
         time.sleep(0.25)
         if yes_or_no == "yes":
@@ -178,7 +207,7 @@ class type:
                 self.accuracy += self.accuracy*self.upgrade_value_a_percent
                 self.upgrade_value_a_percent += 0.3
                 print("You have $" + str(self.money))
-                print("Current Accuracy Multi " + str(self.accuracy + "x"))
+                print(f"Current Accuracy Multi {self.accuracy:.2f} x")
                 print("- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -")
                 hit_or_upgrade(ready)
             elif self.money < self.cost_a:
@@ -186,7 +215,6 @@ class type:
         elif yes_or_no == "no":
             print("Carry on")
             print("- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -")
-
              
     
     def hit(self):
@@ -225,6 +253,7 @@ class type:
 
     
 player = type()
+
 
 def hit_or_upgrade(x):
     if x == "hit":

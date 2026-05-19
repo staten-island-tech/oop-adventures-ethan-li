@@ -12,7 +12,8 @@ def getRiddle(difficulty):
     answer = data['answer'].lower()
     print(riddle)
     print(answer)
-    return answer
+    list = [answer]
+    return list
 
 
 for words in getRiddle("hard"):
