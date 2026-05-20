@@ -2,6 +2,7 @@ import random
 import time
 import math
 import requests
+start = time.time()
 
 # def getRiddle(difficulty):
 #     response = requests.get(f"https://api.apileague.com/retrieve-random-riddle?api-key=1f532a394a454ca5a7b997b4a8031c40&difficulty={difficulty.lower()}")
@@ -141,6 +142,16 @@ class type:
         self.cost_a = 50*a
         self.cooldown_time = 10/cooldown
         self.last_hit_time = 0  
+
+        self.total_upgrade = 0
+        self.total_hit = 0
+        self.total_m = 0
+        self.total_c = 0
+        self.total_a = 0
+        self.total_spent_m = 0
+        self.total_spent_c = 0
+        self.total_spent_a = 0
+        self.total_spent = 0
         
 
     def upgrade_m(self):
@@ -151,6 +162,10 @@ class type:
         time.sleep(0.25)
         if yes_or_no == "yes":
             if self.money >= self.cost_m:
+                self.total_upgrade += 1
+                self.total_m += 1
+                self.total_spent += self.cost_m
+                self.total_spent_m += self.cost_m
                 self.money -= self.cost_m
                 self.cost_m += self.cost_m*self.upgrade_value_m_percent_cost
                 self.upgrade_value_m_percent_cost += 0.25
@@ -166,6 +181,7 @@ class type:
             print("Carry on")
             print("- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -")
 
+
     def upgrade_c(self):
         print("- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -")
         print("You have $" + str(self.money))
@@ -175,6 +191,10 @@ class type:
         time.sleep(0.25)
         if yes_or_no == "yes":
             if self.money >= self.cost_c:
+                self.total_upgrade += 1
+                self.total_c += 1
+                self.total_spent += self.cost_c
+                self.total_spent_c += self.cost_c
                 self.money -= self.cost_c
                 self.cost_c += self.cost_c*self.upgrade_value_c_percent_cost
                 self.upgrade_value_c_percent_cost += 0.5
@@ -201,13 +221,17 @@ class type:
         time.sleep(0.25)
         if yes_or_no == "yes":
             if self.money >= self.cost_a:
+                self.total_upgrade += 1
+                self.total_a += 1
+                self.total_spent += self.cost_a
+                self.total_spent_a += self.cost_a
                 self.money -= self.cost_a
                 self.cost_a += self.cost_a*self.upgrade_value_a_percent_cost
                 self.upgrade_value_a_percent_cost += 0.75
                 self.accuracy += self.accuracy*self.upgrade_value_a_percent
                 self.upgrade_value_a_percent += 0.3
                 print("You have $" + str(self.money))
-                print(f"Current Accuracy Multi {self.accuracy:.2f} x")
+                print(f"Current Accuracy Multi {self.accuracy:.2f}x")
                 print("- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -")
                 hit_or_upgrade(ready)
             elif self.money < self.cost_a:
@@ -225,6 +249,7 @@ class type:
             if hit_or_miss > 50:
                 divide = self.accuracy
                 est = round(random.uniform(1, 50/divide), 2)
+                self.total_hit += 1
                 if self.accuracy >= est:
                     print("HOLE IN ONE!")
                     self.money += base_money_earned * self.multi * 2
@@ -268,12 +293,28 @@ def hit_or_upgrade(x):
         elif upgrade_type == "accuracy":
             player.upgrade_a()
 
+
 player.show_stats()
+
 
 while player.money <= goal:
     ready = str(input("Hit or Upgrade? ").lower())
     hit_or_upgrade(ready)
     
 
-    
+end = time.time()
+run = start - end
 
+
+print("- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -")  
+print('YOU BEAT THE GAME!')
+print(f'Run time: {run:.0f} seconds')
+print("- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -")  
+print("Game Stats:")
+print(f"Total Upgrade Amount: {player.total_upgrade} upgrades for ${player.total_spent:.2f}")
+print(f"Total Money Multi Upgrade Amount: {player.total_m} upgrades for ${player.total_spent_m}")
+print(f"Total Cooldown Upgrade Amount: {player.total_c} upgrades for ${player.total_spent_c}")
+print(f"Total Accuracy Upgrade Amount: {player.total_a} upgrades for ${player.total_spent_a}")
+print(f"Total Times Hit: {player.total_hit} hits") #do total misses, hit and hole i one
+print("- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -")  
+# player stats
