@@ -100,29 +100,41 @@ mm = 1
 
 
 if difficulty == "easy":
+    print("Easy Mode: 0.5x Goal and 2x money")
     base_money_earned = 10*2
-    goal = 10000/2
-    print("Goal: $" + goal)
+    goal = 1000/2
+    print("Goal: $" + str(goal))
 elif difficulty == "normal":
+    print("Normal Mode: No modification")
     base_money_earned = 10
-    goal = 10000
-    print("Goal: $" + goal)
+    goal = 1000
+    print("Goal: $" + str(goal))
 elif difficulty == "hard":
+    print("Hard Mode: 2x cost")
     base_money_earned = 10 
-    goal = 10000
-    m = 1.5
-    c = 1.5
-    a = 1.5
-elif difficulty == "extreme":
-    base_money_earned = 10/2
-    goal = 10000*2
+    goal = 1000
     m = 2
     c = 2
     a = 2
-elif difficulty == "qwerty":
+    print("Goal: $" + str(goal))
+elif difficulty == "extreme":
+    print("Extreme Mode: 2x goal and 2x cost")
     base_money_earned = 10
-    goal = 999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999
-    mm = 999999999999999999999999999999999
+    goal = 1000*2
+    m = 2
+    c = 2
+    a = 2
+    print("Goal: $" + str(goal))
+elif difficulty == "qwerty":
+    print("Dev mode")
+    base_money_earned = 10
+    goal = 100
+    mm = 0
+    m = 0
+    c = 0
+    a = 0
+    cooldown = 50
+
 
 class type:
     def __init__(self):
@@ -140,7 +152,7 @@ class type:
         self.cost_m = 10*m
         self.cost_c = 20*c
         self.cost_a = 50*a
-        self.cooldown_time = 10/cooldown
+        self.cooldown_time = 10/self.cooldown
         self.last_hit_time = 0  
 
         self.total_upgrade = 0
@@ -152,7 +164,9 @@ class type:
         self.total_spent_c = 0
         self.total_spent_a = 0
         self.total_spent = 0
-        
+        self.miss = 0
+        self.hole_in_one = 0
+        self.successful_hit = 0
 
     def upgrade_m(self):
         print("- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -")
@@ -246,20 +260,23 @@ class type:
         if current_time - self.last_hit_time >= self.cooldown_time:
             self.last_hit_time = current_time
             hit_or_miss = random.randint(1, 100)
+            self.total_hit += 1
             if hit_or_miss > 50:
                 divide = self.accuracy
                 est = round(random.uniform(1, 50/divide), 2)
-                self.total_hit += 1
                 if self.accuracy >= est:
                     print("HOLE IN ONE!")
                     self.money += base_money_earned * self.multi * 2
                     print("$ " + str(self.money))
+                    self.hole_in_one += 1
                 else:
                     print("HIT!")
                     self.money += base_money_earned * self.multi
                     print("$ " + str(self.money))
+                    self.successful_hit += 1
             elif hit_or_miss <= 50:
                 print("MISS!")
+                self.miss += 1
         else:
             print(f"Still on cooldown. Wait {self.cooldown_time - (current_time - self.last_hit_time):.2f}s")
         
@@ -316,5 +333,8 @@ print(f"Total Money Multi Upgrade Amount: {player.total_m} upgrades for ${player
 print(f"Total Cooldown Upgrade Amount: {player.total_c} upgrades for ${player.total_spent_c}")
 print(f"Total Accuracy Upgrade Amount: {player.total_a} upgrades for ${player.total_spent_a}")
 print(f"Total Times Hit: {player.total_hit} hits") #do total misses, hit and hole i one
+print(f"Successful Hit: {player.successful_hit} hits")
+print(f"Hole in One: {player.hole_in_one} hole in ones!")
+print(f"Missed Hit: {player.miss}")
 print("- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -")  
-# player stats
+player.show_stats()
