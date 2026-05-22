@@ -4,21 +4,6 @@ import math
 import requests
 start = time.time()
 
-# def getRiddle(difficulty):
-#     response = requests.get(f"https://api.apileague.com/retrieve-random-riddle?api-key=1f532a394a454ca5a7b997b4a8031c40&difficulty={difficulty.lower()}")
-#     if response.status_code != 200:
-#         print("Error fetching data!")
-#         return None
-    
-#     data = response.json()
-
-#     riddle = data['riddle']
-#     answer = data['answer'].lower()
-#     print(riddle)
-#     print(answer)
-    # list = [answer]
-    # return list
-
 #Golf incremental
 
 print("Welcome to Golf Incremental!")
@@ -128,7 +113,7 @@ elif difficulty == "extreme":
 elif difficulty == "qwerty":
     print("Dev mode")
     base_money_earned = 10
-    goal = 100
+    goal = 10000
     mm = 0
     m = 0
     c = 0
@@ -283,12 +268,12 @@ class type:
 
     def show_stats(self):
         print(f"Character: {class_types.capitalize()}")
-        print(f"Money: ${player.money}")
-        print(f"Money Multi: {player.multi}x")
+        print(f"Money: ${player.money:.2f}")
+        print(f"Money Multi: {player.multi:.2f}x")
         if player.cooldown-1 > 0:
-            print(f"Cooldown: {player.cooldown-1:.2f}% faster")
+            print(f"Cooldown: {player.cooldown-1:.1f}% faster")
         elif player.cooldown-1 < 0:
-            print(f"Cooldown: {player.cooldown-1:.2f}% slower")
+            print(f"Cooldown: {player.cooldown-1:.1f}% slower")
         elif player.cooldown-1 == 0:
             print(f"Cooldown: 0% - Normal")
         print("- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -")  
@@ -320,11 +305,48 @@ while player.money <= goal:
     
 
 end = time.time()
-run = start - end
+run = end - start
+print("- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -") 
+print("Final Test: (Correct = win   Wrong = lose)")
+
+
+def getRiddle(difficulty):
+    response = requests.get(f"https://api.apileague.com/retrieve-random-riddle?api-key=1f532a394a454ca5a7b997b4a8031c40&difficulty={difficulty.lower()}")
+    if response.status_code != 200:
+        print("Error fetching data!")
+        return None
+    
+
+    data = response.json()
+    answer = data['answer']
+    riddle = data['answer']
+    return answer, riddle
+
+
+difficulty_gen = random.randint(1, 3)
+if difficulty_gen == 1:
+    difficult = "easy"
+elif difficulty_gen == 2:
+    difficult = "medium"
+elif difficulty_gen == 3:
+    difficult = "hard"
+
+
+x, y = getRiddle(difficult)
+
+
+for words in x:
+    question = input(y)
+    for word in question:
+        if question in words:
+            print("Correct")
+        else:
+            print("Wrong")
 
 
 print("- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -")  
 print('YOU BEAT THE GAME!')
+time.sleep(1.5)
 print(f'Run time: {run:.0f} seconds')
 print("- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -")  
 print("Game Stats:")
@@ -332,9 +354,10 @@ print(f"Total Upgrade Amount: {player.total_upgrade} upgrades for ${player.total
 print(f"Total Money Multi Upgrade Amount: {player.total_m} upgrades for ${player.total_spent_m}")
 print(f"Total Cooldown Upgrade Amount: {player.total_c} upgrades for ${player.total_spent_c}")
 print(f"Total Accuracy Upgrade Amount: {player.total_a} upgrades for ${player.total_spent_a}")
-print(f"Total Times Hit: {player.total_hit} hits") #do total misses, hit and hole i one
+print(f"Total Times Hit: {player.total_hit} hits") 
 print(f"Successful Hit: {player.successful_hit} hits")
-print(f"Hole in One: {player.hole_in_one} hole in ones!")
+print(f"Hole in One: {player.hole_in_one} hole in ones")
 print(f"Missed Hit: {player.miss}")
+time.sleep(5)
 print("- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -")  
 player.show_stats()

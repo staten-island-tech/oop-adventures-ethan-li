@@ -87,34 +87,36 @@
 
 
 
-import time
+# import time
 
-class wasd:
-    def __init__(self, cooldown_seconds=2.0):
-        self.cooldown = cooldown_seconds
-        self.last_hit_time = 0  
+# class wasd:
+#     def __init__(self, cooldown_seconds=2.0):
+#         self.cooldown = cooldown_seconds
+#         self.last_hit_time = 0  
 
-    def try_hit(self):
-        current_time = time.time()
-        if current_time - self.last_hit_time >= self.cooldown:
-            print("Hit successful!")
-            self.last_hit_time = current_time
-            return False
-        else:
-            print(f"Still on cooldown. Wait {self.cooldown - (current_time - self.last_hit_time):.2f}s")
-            return True
+#     def try_hit(self):
+#         current_time = time.time()
+#         if current_time - self.last_hit_time >= self.cooldown:
+#             print("Hit successful!")
+#             self.last_hit_time = current_time
+#             return False
+#         else:
+#             print(f"Still on cooldown. Wait {self.cooldown - (current_time - self.last_hit_time):.2f}s")
+#             return True
 
-combat = wasd()
+# combat = wasd()
 
-while combat.try_hit() is True:
-
-    
-    combat.try_hit()
-    time.sleep(0.25) 
-while combat.try_hit() is True:
+# while combat.try_hit() is True:
 
     
-    combat.try_hit() 
-    time.sleep(0.25)
+#     combat.try_hit()
+#     time.sleep(0.25) 
+# while combat.try_hit() is True:
 
+    
+#     combat.try_hit() 
+#     time.sleep(0.25)
+import random
 
+difficult = random.randint(1, 3)
+print(difficult)
