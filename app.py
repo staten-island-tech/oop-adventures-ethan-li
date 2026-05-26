@@ -318,8 +318,10 @@ def getRiddle(difficulty):
     
 
     data = response.json()
-    answer = data['answer']
-    riddle = data['answer']
+    answer_list = str(data['answer']).lower()
+    riddle = data['riddle']
+    answer = [answer_list]
+    print(answer)
     return answer, riddle
 
 
@@ -331,17 +333,20 @@ elif difficulty_gen == 2:
 elif difficulty_gen == 3:
     difficult = "hard"
 
-
 x, y = getRiddle(difficult)
 
-
+print("- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -")  
+print("Difficulty: " + difficult.capitalize())
 for words in x:
-    question = input(y)
+    question = input(y + " ").lower()
     for word in question:
-        if question in words:
+        if word in words:
             print("Correct")
+            break
         else:
             print("Wrong")
+            break
+    break
 
 
 print("- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -")  
@@ -357,7 +362,7 @@ print(f"Total Accuracy Upgrade Amount: {player.total_a} upgrades for ${player.to
 print(f"Total Times Hit: {player.total_hit} hits") 
 print(f"Successful Hit: {player.successful_hit} hits")
 print(f"Hole in One: {player.hole_in_one} hole in ones")
-print(f"Missed Hit: {player.miss}")
+print(f"Missed Hit: {player.miss} missed hits")
 time.sleep(5)
 print("- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -")  
 player.show_stats()

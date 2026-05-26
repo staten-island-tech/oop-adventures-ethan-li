@@ -32,8 +32,10 @@ def getRiddle(difficulty):
     
 
     data = response.json()
-    answer = str(data['answer']).lower()
-    riddle = str(data['riddle'])
+    answer_list = str(data['answer']).lower()
+    riddle = data['riddle']
+    answer = [answer_list]
+    print(answer)
     return answer, riddle
 
 
@@ -45,15 +47,17 @@ elif difficulty_gen == 2:
 elif difficulty_gen == 3:
     difficult = "hard"
 
-
-print(f"You got a {difficult} riddle!")
 x, y = getRiddle(difficult)
 
-
+print("- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -")  
+print("Difficulty: " + difficult.capitalize())
 for words in x:
-    question = input(y).lower()
+    question = input(y + " ").lower()
     for word in question:
-        if question in words:
+        if word in words:
             print("Correct")
+            break
         else:
             print("Wrong")
+            break
+    break
