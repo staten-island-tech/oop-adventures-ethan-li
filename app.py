@@ -153,6 +153,7 @@ class type:
         self.hole_in_one = 0
         self.successful_hit = 0
 
+
     def upgrade_m(self):
         print("- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -")
         print("You have $" + str(self.money))
@@ -306,6 +307,11 @@ while player.money <= goal:
 
 end = time.time()
 run = end - start
+minute = math.floor(run/60)
+second = (run/60 - math.floor(run/60)) * 60
+hour = math.floor(minute/60)
+
+
 print("- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -") 
 print("Final Test: (Correct = win   Wrong = lose)")
 
@@ -321,7 +327,7 @@ def getRiddle(difficulty):
     answer_list = str(data['answer']).lower()
     riddle = data['riddle']
     answer = [answer_list]
-    print(answer)
+    print(answer) #answer
     return answer, riddle
 
 
@@ -333,7 +339,9 @@ elif difficulty_gen == 2:
 elif difficulty_gen == 3:
     difficult = "hard"
 
+
 x, y = getRiddle(difficult)
+
 
 print("- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -")  
 print("Difficulty: " + difficult.capitalize())
@@ -352,7 +360,16 @@ for words in x:
 print("- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -")  
 print('YOU BEAT THE GAME!')
 time.sleep(1.5)
-print(f'Run time: {run:.0f} seconds')
+
+
+if run <= 60:
+    print(f'Run time: {run:.0f} seconds')
+elif run > 60 and run <= 3600:
+    print(f"Run time: {minute} minutes and {second:.0f} seconds")
+elif run > 3600:
+    print(f"Run time: {hour} hours; {minute} minutes a;  {second:.0f} seconds")
+
+
 print("- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -")  
 print("Game Stats:")
 print(f"Total Upgrade Amount: {player.total_upgrade} upgrades for ${player.total_spent:.2f}")
@@ -366,3 +383,4 @@ print(f"Missed Hit: {player.miss} missed hits")
 time.sleep(5)
 print("- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -")  
 player.show_stats()
+

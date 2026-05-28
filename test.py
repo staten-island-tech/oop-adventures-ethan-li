@@ -117,6 +117,20 @@
 #     combat.try_hit() 
 #     time.sleep(0.25)
 import random
+import math
+# difficult = random.randint(1, 3)
+# print(difficult)
+# print(math.floor(4.8))
 
-difficult = random.randint(1, 3)
-print(difficult)
+run = 3600
+minute = math.floor(run/60)
+second = (run/60 - math.floor(run/60)) * 60
+hour = math.floor(minute/60)
+
+
+if run < 60:
+    print(f'Run time: {run:.0f} seconds')
+elif run >= 60 and run < 3600:
+    print(f"Run time: {minute} minutes and {second:.0f} seconds")
+elif run >= 3600:
+    print(f"Run time: {hour} hours; {minute} minutes a;  {second:.0f} seconds")
