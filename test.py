@@ -122,15 +122,18 @@ import math
 # print(difficult)
 # print(math.floor(4.8))
 
-run = 3600
-minute = math.floor(run/60)
-second = (run/60 - math.floor(run/60)) * 60
-hour = math.floor(minute/60)
-
+run = 19000
+second = run
+minute = run/60
+hour = run/3600
 
 if run < 60:
-    print(f'Run time: {run:.0f} seconds')
+    print(f'Run time: {second:.0f} seconds')
 elif run >= 60 and run < 3600:
-    print(f"Run time: {minute} minutes and {second:.0f} seconds")
+    minute = run/60
+    second = (run/60 - math.floor(minute))*60
+    print(f"Run time: {minute:.0f} minutes and {second:.0f} seconds")
 elif run >= 3600:
-    print(f"Run time: {hour} hours; {minute} minutes a;  {second:.0f} seconds")
+    minute -= math.floor(hour)*60
+    second -= (math.floor(minute)*60) + (math.floor(hour)*3600)
+    print(f"Run time: {math.floor(hour)} hours; {math.floor(minute)} minutes a;  {second:.0f} seconds")
