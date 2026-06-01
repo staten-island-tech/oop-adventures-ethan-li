@@ -118,7 +118,7 @@ elif difficulty == "qwerty":
     m = 0
     c = 0
     a = 0
-    cooldown = 50
+    cooldown = 2
 
 
 class type:
@@ -247,7 +247,7 @@ class type:
             self.last_hit_time = current_time
             hit_or_miss = random.randint(1, 100)
             self.total_hit += 1
-            if hit_or_miss > 50:
+            if hit_or_miss < 75:
                 divide = self.accuracy
                 est = round(random.uniform(1, 50/divide), 2)
                 if self.accuracy >= est:
@@ -260,7 +260,7 @@ class type:
                     self.money += base_money_earned * self.multi
                     print("$ " + str(self.money))
                     self.successful_hit += 1
-            elif hit_or_miss <= 50:
+            elif hit_or_miss >= 75:
                 print("MISS!")
                 self.miss += 1
         else:
@@ -272,9 +272,9 @@ class type:
         print(f"Money: ${player.money:.2f}")
         print(f"Money Multi: {player.multi:.2f}x")
         if player.cooldown-1 > 0:
-            print(f"Cooldown: {player.cooldown-1:.1f}% faster")
+            print(f"Cooldown: {(player.cooldown-1)*100:.1f}% faster")
         elif player.cooldown-1 < 0:
-            print(f"Cooldown: {player.cooldown-1:.1f}% slower")
+            print(f"Cooldown: {(player.cooldown-1)*100:.1f}% slower")
         elif player.cooldown-1 == 0:
             print(f"Cooldown: 0% - Normal")
         print("- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -")  
