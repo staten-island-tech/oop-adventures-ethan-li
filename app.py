@@ -3,6 +3,13 @@ import time
 import math
 import requests
 start = time.time()
+import os
+import sys
+
+def restart_program():
+    print("Restarting")
+    os.execv(sys.executable, ['python'] + sys.argv)
+
 
 #Golf incremental
 
@@ -10,10 +17,6 @@ print("Welcome to Golf Incremental!")
 print("- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -")
 time.sleep(1)
 print("Reach your goal to ascend")  
-time.sleep(1)
-print("Ascend to get accession points")
-time.sleep(1)
-print("Use accession points on skill tree")
 time.sleep(1)
 print("Hole in ones give 2x money and landing a hit gives no extra multiplier")
 time.sleep(1)
@@ -84,41 +87,47 @@ a = 1
 mm = 1
 
 
-if difficulty == "easy":
-    print("Easy Mode: 0.5x Goal and 2x money")
-    base_money_earned = 10*2
-    goal = 1000/2
-    print("Goal: $" + str(goal))
-elif difficulty == "normal":
-    print("Normal Mode: No modification")
-    base_money_earned = 10
-    goal = 1000
-    print("Goal: $" + str(goal))
-elif difficulty == "hard":
-    print("Hard Mode: 2x cost")
-    base_money_earned = 10 
-    goal = 1000
-    m = 2
-    c = 2
-    a = 2
-    print("Goal: $" + str(goal))
-elif difficulty == "extreme":
-    print("Extreme Mode: 2x goal and 2x cost")
-    base_money_earned = 10
-    goal = 1000*2
-    m = 2
-    c = 2
-    a = 2
-    print("Goal: $" + str(goal))
-elif difficulty == "qwerty":
-    print("Dev mode")
-    base_money_earned = 10
-    goal = 10000
-    mm = 0
-    m = 0
-    c = 0
-    a = 0
-    cooldown = 2
+for x in difficulty:
+    if x in "easy":
+        print("Easy Mode: 0.5x Goal and 2x money")
+        base_money_earned = 10*2
+        goal = 1000/2
+        print("Goal: $" + str(goal))
+        break
+    elif x in "normal":
+        print("Normal Mode: No modification")
+        base_money_earned = 10
+        goal = 1000
+        print("Goal: $" + str(goal))
+        break
+    elif x in "hard":
+        print("Hard Mode: 2x cost")
+        base_money_earned = 10 
+        goal = 1000
+        m = 2
+        c = 2
+        a = 2
+        print("Goal: $" + str(goal))
+        break
+    elif x in "extreme":
+        print("Extreme Mode: 2x goal and 2x cost")
+        base_money_earned = 10
+        goal = 1000*2
+        m = 2
+        c = 2
+        a = 2
+        print("Goal: $" + str(goal))
+        break
+    elif x in "qwerty":
+        print("Dev mode")
+        base_money_earned = 10
+        goal = 10000
+        mm = 0
+        m = 0
+        c = 0
+        a = 0
+        cooldown = 2
+        break
 
 
 class type:
@@ -283,11 +292,11 @@ class type:
 player = type()
 
 
-def hit_or_upgrade(x):
-    if x == "hit":
+def hit_or_upgrade(choice):
+    if choice == "hit":
         player.hit()
     
-    elif x == "upgrade":
+    elif choice == "upgrade":
         upgrade_type = input("What do you want to upgrade? (Multi/Cooldown/Accuracy/No upgrade) ").lower()
         if upgrade_type == "multi":
             player.upgrade_m()
@@ -327,7 +336,6 @@ def getRiddle(difficulty):
     answer_list = str(data['answer']).lower()
     riddle = data['riddle']
     answer = [answer_list]
-    print(answer) #answer
     return answer, riddle
 
 
@@ -340,12 +348,12 @@ elif difficulty_gen == 3:
     difficult = "hard"
 
 
-x, y = getRiddle(difficult)
+w, y = getRiddle(difficult)
 
 
 print("- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -")  
 print("Difficulty: " + difficult.capitalize())
-for words in x:
+for words in w:
     question = input(y + " ").lower()
     for word in question:
         if word in words:
@@ -383,4 +391,8 @@ print(f"Missed Hit: {player.miss} missed hits")
 time.sleep(5)
 print("- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -")  
 player.show_stats()
-
+time.sleep(5)
+print("- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -")  
+answer = input("Type 'restart' to play again: ")
+if answer == "restart":
+    restart_program()
