@@ -121,8 +121,8 @@ for x in difficulty:
     elif x in "qwerty":
         print("Dev mode")
         base_money_earned = 10
-        goal = 10000
-        mm = 0
+        goal = 15
+        mm = 1
         m = 0
         c = 0
         a = 0
@@ -280,12 +280,12 @@ class type:
         print(f"Character: {class_types.capitalize()}")
         print(f"Money: ${player.money:.2f}")
         print(f"Money Multi: {player.multi:.2f}x")
-        if player.cooldown-1 > 0:
+        if player.cooldown > 1:
             print(f"Cooldown: {(player.cooldown-1)*100:.1f}% faster")
-        elif player.cooldown-1 < 0:
+        elif player.cooldown < 1:
             print(f"Cooldown: {(player.cooldown-1)*100:.1f}% slower")
-        elif player.cooldown-1 == 0:
-            print(f"Cooldown: 0% - Normal")
+        elif player.cooldown == 1:
+            print(f"Cooldown: 0 % - Normal")
         print("- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -")  
 
     
@@ -336,6 +336,7 @@ def getRiddle(difficulty):
     answer_list = str(data['answer']).lower()
     riddle = data['riddle']
     answer = [answer_list]
+    print(answer)
     return answer, riddle
 
 
@@ -388,11 +389,10 @@ print(f"Total Times Hit: {player.total_hit} hits")
 print(f"Successful Hit: {player.successful_hit} hits")
 print(f"Hole in One: {player.hole_in_one} hole in ones")
 print(f"Missed Hit: {player.miss} missed hits")
+print(f"Money: {player.money:.2f}")
 time.sleep(5)
 print("- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -")  
-player.show_stats()
-time.sleep(5)
-print("- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -")  
+time.sleep(5) 
 answer = input("Type 'restart' to play again: ")
 if answer == "restart":
     restart_program()
