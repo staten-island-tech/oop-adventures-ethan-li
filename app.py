@@ -2,9 +2,12 @@ import random
 import time
 import math
 import requests
-start = time.time()
 import os
 import sys
+
+
+start = time.time()
+
 
 def restart_program():
     print("Restarting")
@@ -12,7 +15,6 @@ def restart_program():
 
 
 #Golf incremental
-
 print("Welcome to Golf Incremental!")
 print("- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -")
 time.sleep(1)
@@ -33,6 +35,7 @@ types = [
      'money': 0
      },
 
+
     {'class': 'sharpshooter', 
      'multi': 1, 
      'cooldown': 1, 
@@ -40,6 +43,7 @@ types = [
      'desc': "Pro: Increased accuracy Con: Dept",
      'money': -50
      },
+
 
     {'class': 'abuser', 
      'multi': 1, 
@@ -49,14 +53,16 @@ types = [
      'money': 0
      },
 
+
     {'class': 'midas', 
      'multi': 1.25, 
      'cooldown': 1.0, 
      'accuracy': 0.8, 
      'desc': "Pro: Starter money Con: Decreased accuracy",
-     'money': 10000000
+     'money': 100
      }
 ]
+
 
 print("- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -")
 print("Class list:")
@@ -68,11 +74,14 @@ for type in types:
         print("- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -")
     time.sleep(0.25)
 
+
 class_types = input("What class? ").lower()
-difficulty = input("What difficulty? ").lower()  # Add Diffuclty mode #   Easy - 2x money   Normal - Normal     Hard - 1.5x cost  Extreeme - 2x cost + 1/2x money 
+difficulty = input("What difficulty? ").lower()
+
 
 print("- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -")
 time.sleep(0.25)
+
 
 for type1 in types:
     if class_types in type1['class']:
@@ -80,6 +89,7 @@ for type1 in types:
         cooldown = type1['cooldown']
         accuracy = type1['accuracy']
         money = type1['money']
+
 
 m = 1
 c = 1
@@ -146,8 +156,9 @@ class type:
         self.cost_m = 10*m
         self.cost_c = 20*c
         self.cost_a = 50*a
-        self.cooldown_time = 10/self.cooldown
+        self.cooldown_time = 5/self.cooldown
         self.last_hit_time = 0  
+
 
         self.total_upgrade = 0
         self.total_hit = 0
@@ -209,9 +220,9 @@ class type:
                 self.upgrade_value_c_percent_cost += 0.5
                 self.cooldown += self.cooldown*self.upgrade_value_c_percent
                 self.upgrade_value_c_percent += 0.2 
-                print("You have $" + str(self.money))
-                print("Current Cooldown Multi: " + str(self.cooldown) + "x")
-                self.cooldown_time = 10/self.cooldown
+                print(f"You have $ {self.money:.2f}")
+                print(f"Current Cooldown Multi: {self.cooldown:.2f}x")
+                self.cooldown_time = 5/self.cooldown
                 print(f"Cooldown: {self.cooldown_time:.2f} seconds")
                 print("- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -")
                 hit_or_upgrade(ready)
@@ -239,7 +250,7 @@ class type:
                 self.upgrade_value_a_percent_cost += 0.75
                 self.accuracy += self.accuracy*self.upgrade_value_a_percent
                 self.upgrade_value_a_percent += 0.3
-                print("You have $" + str(self.money))
+                print(f"You have $ {self.money:.2f}")
                 print(f"Current Accuracy Multi {self.accuracy:.2f}x")
                 print("- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -")
                 hit_or_upgrade(ready)
@@ -262,12 +273,12 @@ class type:
                 if self.accuracy >= est:
                     print("HOLE IN ONE!")
                     self.money += base_money_earned * self.multi * 2
-                    print("$ " + str(self.money))
+                    print(f"$ {self.money:.2f}")
                     self.hole_in_one += 1
                 else:
                     print("HIT!")
                     self.money += base_money_earned * self.multi
-                    print("$ " + str(self.money))
+                    print(f"$ {self.money:.2f}")
                     self.successful_hit += 1
             elif hit_or_miss >= 75:
                 print("MISS!")
@@ -296,6 +307,7 @@ def hit_or_upgrade(choice):
     if choice == "hit":
         player.hit()
     
+
     elif choice == "upgrade":
         upgrade_type = input("What do you want to upgrade? (Multi/Cooldown/Accuracy/No upgrade) ").lower()
         if upgrade_type == "multi":
@@ -368,7 +380,7 @@ for words in w:
 
 print("- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -")  
 print('YOU BEAT THE GAME!')
-time.sleep(1.5)
+time.sleep(1)
 
 
 if run <= 60:
@@ -393,6 +405,6 @@ print(f"Money: {player.money:.2f}")
 time.sleep(5)
 print("- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -")  
 time.sleep(5) 
-answer = input("Type 'restart' to play again: ")
+answer = input("Type 'restart' to play again: ").lower()
 if answer == "restart":
     restart_program()
