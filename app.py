@@ -176,7 +176,7 @@ class type:
 
     def upgrade_m(self):
         print("- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -")
-        print("You have $" + str(self.money))
+        print(f"You have ${self.money:.2f}")
         yes_or_no = input(f"Upgrading Multi for ${self.cost_m:.2f} from {self.multi:.2f} x ---> {(self.multi+self.multi*self.upgrade_value_m_percent):.2f} x? (Yes/No) ").lower()
         print("- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -")
         time.sleep(0.25)
@@ -191,7 +191,7 @@ class type:
                 self.upgrade_value_m_percent_cost += 0.25
                 self.multi += self.multi*self.upgrade_value_m_percent
                 self.upgrade_value_m_percent += 0.1 
-                print("You have $" + str(self.money))
+                print(f"You have ${self.money:.2f}")
                 print(f"Current Money Multi: {self.multi:.2f} x")
                 print("- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -")
                 hit_or_upgrade(ready)
@@ -204,7 +204,7 @@ class type:
 
     def upgrade_c(self):
         print("- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -")
-        print("You have $" + str(self.money))
+        print(f"You have ${self.money:.2f}")
         yes_or_no = input(f"Upgrading cooldown for ${self.cost_c:.2f} from {self.cooldown:.2f} x ---> {(self.cooldown+self.cooldown*self.upgrade_value_c_percent):.2f} x? (Yes/No) ").lower()
         print(f"Current Cooldown Time: {self.cooldown_time:.2f} seconds")
         print("- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -")
@@ -220,7 +220,7 @@ class type:
                 self.upgrade_value_c_percent_cost += 0.5
                 self.cooldown += self.cooldown*self.upgrade_value_c_percent
                 self.upgrade_value_c_percent += 0.2 
-                print(f"You have $ {self.money:.2f}")
+                print(f"You have ${self.money:.2f}")
                 print(f"Current Cooldown Multi: {self.cooldown:.2f}x")
                 self.cooldown_time = 5/self.cooldown
                 print(f"Cooldown: {self.cooldown_time:.2f} seconds")
@@ -235,7 +235,7 @@ class type:
 
     def upgrade_a(self):
         print("- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -")
-        print("You have $" + str(self.money))
+        print(f"You have ${self.money:.2f}")
         yes_or_no = input(f"Upgrading accuracy for ${self.cost_a:.2f} from {self.accuracy:.2f} x ---> {(self.accuracy+self.accuracy*self.upgrade_value_a_percent):.2f} x? (Yes/No) ").lower()
         print("- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -")
         time.sleep(0.25)
@@ -250,7 +250,7 @@ class type:
                 self.upgrade_value_a_percent_cost += 0.75
                 self.accuracy += self.accuracy*self.upgrade_value_a_percent
                 self.upgrade_value_a_percent += 0.3
-                print(f"You have $ {self.money:.2f}")
+                print(f"You have ${self.money:.2f}")
                 print(f"Current Accuracy Multi {self.accuracy:.2f}x")
                 print("- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -")
                 hit_or_upgrade(ready)
@@ -268,17 +268,16 @@ class type:
             hit_or_miss = random.randint(1, 100)
             self.total_hit += 1
             if hit_or_miss < 75:
-                divide = self.accuracy
-                est = round(random.uniform(1, 50/divide), 2)
-                if self.accuracy >= est:
+                est = round(random.uniform(1, 50), 2)
+                if est >= 40:
                     print("HOLE IN ONE!")
                     self.money += base_money_earned * self.multi * 2
-                    print(f"$ {self.money:.2f}")
+                    print(f"${self.money:.2f}")
                     self.hole_in_one += 1
                 else:
                     print("HIT!")
                     self.money += base_money_earned * self.multi
-                    print(f"$ {self.money:.2f}")
+                    print(f"${self.money:.2f}")
                     self.successful_hit += 1
             elif hit_or_miss >= 75:
                 print("MISS!")
@@ -348,7 +347,7 @@ def getRiddle(difficulty):
     answer_list = str(data['answer']).lower()
     riddle = data['riddle']
     answer = [answer_list]
-    print(answer)
+    # print(answer)
     return answer, riddle
 
 
@@ -394,17 +393,16 @@ elif run > 3600:
 print("- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -")  
 print("Game Stats:")
 print(f"Total Upgrade Amount: {player.total_upgrade} upgrades for ${player.total_spent:.2f}")
-print(f"Total Money Multi Upgrade Amount: {player.total_m} upgrades for ${player.total_spent_m}")
-print(f"Total Cooldown Upgrade Amount: {player.total_c} upgrades for ${player.total_spent_c}")
-print(f"Total Accuracy Upgrade Amount: {player.total_a} upgrades for ${player.total_spent_a}")
+print(f"Total Money Multi Upgrade Amount: {player.total_m} upgrades for ${player.total_spent_m:.2f}")
+print(f"Total Cooldown Upgrade Amount: {player.total_c} upgrades for ${player.total_spent_c:.2f}")
+print(f"Total Accuracy Upgrade Amount: {player.total_a} upgrades for ${player.total_spent_a:.2f}")
 print(f"Total Times Hit: {player.total_hit} hits") 
 print(f"Successful Hit: {player.successful_hit} hits")
 print(f"Hole in One: {player.hole_in_one} hole in ones")
 print(f"Missed Hit: {player.miss} missed hits")
-print(f"Money: {player.money:.2f}")
+print(f"Money: ${player.money:.2f}")
 time.sleep(5)
 print("- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -")  
-time.sleep(5) 
 answer = input("Type 'restart' to play again: ").lower()
 if answer == "restart":
     restart_program()
