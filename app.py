@@ -265,7 +265,7 @@ class type:
         current_time = time.time()
         if current_time - self.last_hit_time >= self.cooldown_time:
             self.last_hit_time = current_time
-            hit_or_miss = random.randint(1, 100)
+            hit_or_miss = random.randint(0, 100)
             self.total_hit += 1
             if hit_or_miss < 75:
                 est = round(random.uniform(1, 50), 2)
@@ -373,6 +373,7 @@ for words in w:
             break
         else:
             print("Wrong")
+            print(f"The answer is: {w}")
             break
     break
 
