@@ -131,7 +131,7 @@ for x in difficulty:
     elif x in "qwerty":
         print("Dev mode")
         base_money_earned = 10
-        goal = 15
+        goal = 0 #pls isgn out unc 
         mm = 1
         m = 0
         c = 0
